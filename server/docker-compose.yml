@@ -1,0 +1,9 @@
+version: '3'
+services:
+  app:
+    image: your-dockerhub-username/W9_CK:latest
+    restart: unless-stopped
+    env_file:
+      - W9_CK-env
+    ports:
+      - "7045:80"
