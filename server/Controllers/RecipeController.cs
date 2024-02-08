@@ -2,16 +2,12 @@ namespace W9_CK.controllers;
 
 [ApiController]
 [Route("/api/recipes")]
-public class RecipesController : ControllerBase
+public class RecipesController(Auth0Provider auth, RecipeService recipeService, IngredientService ingredientService) : ControllerBase
 {
-    private readonly Auth0Provider auth;
-    private readonly RecipeService recipeService;
+    private readonly Auth0Provider auth = auth;
+    private readonly RecipeService recipeService = recipeService;
+    private readonly IngredientService ingredientService = ingredientService;
 
-    public RecipesController(Auth0Provider auth, RecipeService recipeService)
-    {
-        this.auth = auth;
-        this.recipeService = recipeService;
-    }
 
     [HttpGet]
     public ActionResult<List<Recipe>> GetRecipes()
@@ -85,5 +81,19 @@ public class RecipesController : ControllerBase
         Account userInfo = await auth.GetUserInfoAsync<Account>(HttpContext);
         return recipeService.DeleteRecipe(id, userInfo.Id);
 
+    }
+
+    [HttpGet("{recipeId}/ingredients")]
+    public ActionResult<List<Ingredient>> GetRecipeIngredients(int recipeId)
+    {
+        try
+        {
+            List<Ingredient> ingredients = ingredientService.GetRecipeIngredients(recipeId);
+            return Ok(ingredients);
+        }
+        catch (Exception error)
+        {
+            return BadRequest(error.Message);
+        }
     }
 };

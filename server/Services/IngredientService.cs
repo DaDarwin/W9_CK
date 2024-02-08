@@ -1,17 +1,24 @@
 
 namespace W9_CK.Services;
 
-public class IngredientService(IngredientRepository repo)
+public class IngredientService(IngredientRepository repo, RecipeService recipeService)
 {
     private readonly IngredientRepository repo = repo;
+    private readonly RecipeService recipeService = recipeService;
 
-    internal List<Ingredient> GetRecipeIngredients(int recipeID)
+
+    internal List<Ingredient> GetRecipeIngredients(int recipeId)
     {
-        return repo.GetRecipeIngredients(recipeID);
+        return repo.GetRecipeIngredients(recipeId);
     }
 
-    internal Ingredient CreateIngredient(Ingredient data)
+    internal Ingredient CreateIngredient(Ingredient data, string userId)
     {
+        Recipe recipe = recipeService.GetRecipe(data.RecipeId);
+        if (recipe.CreatorId != userId)
+        {
+            throw new Exception("Na");
+        }
         return repo.CreateIngredient(data);
     }
 

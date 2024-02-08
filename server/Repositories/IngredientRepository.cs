@@ -24,7 +24,11 @@ public class IngredientRepository(IDbConnection db)
         INSERT INTO ingredients
         (name, quantity, recipeId)
         VALUES
-        (@name, @quantity, @recipeId);";
+        (@name, @quantity, @recipeId);
+        SELECT
+        *
+        FROM ingredients
+        WHERE ingredients.id = LAST_INSERT_ID();";
         return db.Query<Ingredient>(sql, data).FirstOrDefault();
     }
 
