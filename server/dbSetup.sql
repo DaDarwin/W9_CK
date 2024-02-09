@@ -11,6 +11,6 @@ CREATE TABLE ingredients (
     id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255) NOT NULL, quantity VARCHAR(255) NOT NULL, recipeId int NOT NULL, FOREIGN KEY (recipeId) REFERENCES recipes (id)
 ) default charset utf8 COMMENT '';
 
-INSERT INTO
-    ingredients (name, quantity, recipeId)
-VALUES ("@name", "@quantity", 1)
+CREATE TABLE favorites (
+    id INT AUTO_INCREMENT PRIMARY KEY, recipeId int, FOREIGN KEY (recipeId) REFERENCES recipes (id), accountId VARCHAR(255), FOREIGN KEY (accountId) REFERENCES accounts (id)
+) default charset utf8 COMMENT '';

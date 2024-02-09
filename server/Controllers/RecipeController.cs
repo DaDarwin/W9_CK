@@ -1,4 +1,4 @@
-namespace W9_CK.controllers;
+namespace W9_CK.Controllers;
 
 [ApiController]
 [Route("/api/recipes")]

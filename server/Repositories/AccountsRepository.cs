@@ -1,3 +1,4 @@
+
 namespace W9_CK.Repositories;
 
 public class AccountsRepository
@@ -42,6 +43,22 @@ public class AccountsRepository
             WHERE id = @Id;";
     _db.Execute(sql, update);
     return update;
+  }
+
+  internal List<FavoriteRecipe> GetAccountFavorites(string id)
+  {
+    string sql = @"
+      SELECT
+      recipes.*,
+      favorites.id
+      FROM recipes
+      JOIN favorites ON favorites.recipeId = recipe.id
+      WHERE favorite.accountId = @id;";
+    return _db.Query<FavoriteRecipe, Favorite, FavoriteRecipe>(sql, (recipe, favorite) =>
+    {
+      recipe.FavoriteId = favorite.Id;
+      return recipe;
+    }, new { id }).ToList();
   }
 }
 
