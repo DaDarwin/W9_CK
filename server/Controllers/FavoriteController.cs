@@ -15,7 +15,7 @@ public class FavoriteController(FavoriteService favoriteService, Auth0Provider a
         {
             Account user = await auth.GetUserInfoAsync<Account>(HttpContext);
             data.AccountId = user.Id;
-            return favoriteService.CreateFavorite(data);
+            return Ok(favoriteService.CreateFavorite(data));
         }
         catch (Exception error)
         {
@@ -25,12 +25,12 @@ public class FavoriteController(FavoriteService favoriteService, Auth0Provider a
 
     [HttpDelete("{id}")]
     [Authorize]
-    public async Task<ActionResult<String>> DeleteFavorite(int id)
+    public async Task<ActionResult<string>> DeleteFavorite(int id)
     {
         try
         {
             Account user = await auth.GetUserInfoAsync<Account>(HttpContext);
-            return favoriteService.DeleteFavorite(id, user.Id);
+            return Ok(favoriteService.DeleteFavorite(id, user.Id));
         }
         catch (Exception error)
         {

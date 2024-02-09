@@ -19,7 +19,7 @@ public class FavoriteRepository(IDbConnection db)
         accounts.*,
         favorites.id
         FROM accounts
-        JOIN favorites ON favorites.account.id = account.id
+        JOIN favorites ON favorites.accountId = accounts.id
         WHERE favorites.id = LAST_INSERT_ID();";
         return db.Query<AccountFavorites, Favorite, AccountFavorites>(sql, (account, favorite) =>
         {

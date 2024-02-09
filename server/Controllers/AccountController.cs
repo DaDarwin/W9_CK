@@ -2,16 +2,10 @@ namespace W9_CK.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class AccountController : ControllerBase
+public class AccountController(AccountService accountService, Auth0Provider auth0Provider) : ControllerBase
 {
-  private readonly AccountService _accountService;
-  private readonly Auth0Provider _auth0Provider;
-
-  public AccountController(AccountService accountService, Auth0Provider auth0Provider)
-  {
-    _accountService = accountService;
-    _auth0Provider = auth0Provider;
-  }
+  private readonly AccountService _accountService = accountService;
+  private readonly Auth0Provider _auth0Provider = auth0Provider;
 
   [HttpGet]
   [Authorize]
@@ -27,7 +21,7 @@ public class AccountController : ControllerBase
       return BadRequest(e.Message);
     }
   }
-  [HttpGet]
+  [HttpGet("/favorites")]
   [Authorize]
   public async Task<ActionResult<List<FavoriteRecipe>>> GetAccountFavorites()
   {
