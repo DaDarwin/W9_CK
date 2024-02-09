@@ -25,12 +25,12 @@ public class IngredientController(Auth0Provider auth, IngredientService ingredie
 
     [HttpDelete("{id}")]
     [Authorize]
-    public async Task<ActionResult<String>> DeleteIngredient(int id)
+    public async Task<ActionResult<string>> DeleteIngredient(int id)
     {
         try
         {
             Account user = await auth.GetUserInfoAsync<Account>(HttpContext);
-            String res = ingredientService.DeleteIngredient(id, user);
+            string res = ingredientService.DeleteIngredient(id, user);
             return Ok(res);
         }
         catch (Exception error)

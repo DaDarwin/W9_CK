@@ -52,8 +52,8 @@ public class AccountsRepository
       recipes.*,
       favorites.id
       FROM recipes
-      JOIN favorites ON favorites.recipeId = recipe.id
-      WHERE favorite.accountId = @id;";
+      JOIN favorites ON favorites.recipeId = recipes.id
+      WHERE favorites.accountId = @id;";
     return _db.Query<FavoriteRecipe, Favorite, FavoriteRecipe>(sql, (recipe, favorite) =>
     {
       recipe.FavoriteId = favorite.Id;

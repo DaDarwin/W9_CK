@@ -5,7 +5,7 @@ public class FavoriteService(FavoriteRepository repo)
 {
     private readonly FavoriteRepository repo = repo;
 
-    internal ActionResult<AccountFavorites> CreateFavorite(Favorite data)
+    internal Favorite CreateFavorite(Favorite data)
     {
         return repo.CreateFavorite(data);
     }

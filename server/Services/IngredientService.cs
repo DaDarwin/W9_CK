@@ -24,7 +24,7 @@ public class IngredientService(IngredientRepository repo, RecipeService recipeSe
 
     internal IngredientCreator GetIngredient(int id)
     {
-        return repo.getIngredient(id) ?? throw new Exception($"No Ingredient with Id: {id}");
+        return repo.GetIngredient(id) ?? throw new Exception($"No Ingredient with Id: {id}");
     }
 
     internal string DeleteIngredient(int id, Account user)

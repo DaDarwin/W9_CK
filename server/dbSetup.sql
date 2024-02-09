@@ -14,3 +14,15 @@ CREATE TABLE ingredients (
 CREATE TABLE favorites (
     id INT AUTO_INCREMENT PRIMARY KEY, recipeId int, FOREIGN KEY (recipeId) REFERENCES recipes (id), accountId VARCHAR(255), FOREIGN KEY (accountId) REFERENCES accounts (id)
 ) default charset utf8 COMMENT '';
+
+SELECT recipes.*, favorites.id
+FROM recipes
+    JOIN favorites ON favorites.recipeId = recipes.id
+WHERE
+    favorites.accountId = "65835d5f80d80bc692d5d8ed"
+
+Select ingredients.*, recipes.creatorId
+from ingredients
+    JOIN recipes ON recipes.id = ingredients.recipeId
+WHERE
+    ingredients.id = 6;

@@ -32,20 +32,16 @@ public class IngredientRepository(IDbConnection db)
         return db.Query<Ingredient>(sql, data).FirstOrDefault();
     }
 
-    public IngredientCreator getIngredient(int id)
+    public IngredientCreator GetIngredient(int id)
     {
         string sql = @"
         Select
         ingredients.*,
         recipes.creatorId
         from ingredients
-        JOIN recipes ON ingredient.recipeId = recipe.id
-        WHERE ingredient.id = @id;";
-        IngredientCreator ingredient = db.Query<IngredientCreator, Recipe, IngredientCreator>(sql, (ingredient, recipe) =>
-        {
-            ingredient.CreatorId = recipe.CreatorId;
-            return ingredient;
-        }, new { id }).FirstOrDefault();
+        JOIN recipes ON recipes.id = ingredients.recipeId
+        WHERE ingredients.id = @id;";
+        IngredientCreator ingredient = db.Query<IngredientCreator>(sql, new { id }).FirstOrDefault();
         return ingredient;
     }
 

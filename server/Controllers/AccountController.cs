@@ -21,7 +21,7 @@ public class AccountController(AccountService accountService, Auth0Provider auth
       return BadRequest(e.Message);
     }
   }
-  [HttpGet("/favorites")]
+  [HttpGet("favorites")]
   [Authorize]
   public async Task<ActionResult<List<FavoriteRecipe>>> GetAccountFavorites()
   {

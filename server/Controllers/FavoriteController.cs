@@ -9,7 +9,7 @@ public class FavoriteController(FavoriteService favoriteService, Auth0Provider a
 
     [HttpPost]
     [Authorize]
-    public async Task<ActionResult<AccountFavorites>> CreateFavorite([FromBody] Favorite data)
+    public async Task<ActionResult<Favorite>> CreateFavorite([FromBody] Favorite data)
     {
         try
         {
