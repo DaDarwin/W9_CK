@@ -8,4 +8,6 @@ export const AppState = reactive({
 	account: {},
 	/** @type {Recipe} */
 	recipes: [],
+	/** @type {Recipe} */
+	favoriteRecipes: [],
 });

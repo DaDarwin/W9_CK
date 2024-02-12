@@ -9,6 +9,7 @@ export class Recipe {
 
 		this.creatorId = data.creatorId;
 		this.creator = data.creator;
-		this.favorited = Boolean(data.favorited);
+		this.favoriteId = data.favoriteId;
+		this.favorited = Boolean(data.favoriteId);
 	}
 }

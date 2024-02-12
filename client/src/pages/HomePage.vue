@@ -48,27 +48,53 @@
 				src="https://media.istockphoto.com/id/1218254547/photo/varied-food-carbohydrates-protein-vegetables-fruits-dairy-legumes-on-wood.webp?b=1&s=170667a&w=0&k=20&c=uGHRWrmqv4Nxdj7iUO4iYavWLjqFB3uwH1K3RQ9NID0=" />
 		</div>
 		<div class="mt-5">
-			<Home v-if="selecton == 'home'" />
-
-			<myRecipes v-if="selecton == 'myRecipes'" />
-
-			<myFavorites v-if="selecton == 'favorites'" />
+			<div
+				class="row justify-content-evenly"
+				v-if="recipes.length">
+				<RecipeCard
+					v-for="recipe in recipes"
+					:key="recipe.id"
+					:recipe="recipe"
+					class="col-12 col-md-4" />
+			</div>
 		</div>
 	</section>
 </template>
 
 <script>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, computed } from "vue";
 import NavBar from "../components/Navbar.vue";
 import RecipeCard from "../components/RecipeCard.vue";
+import { AppState } from "../AppState";
+import Pop from "../utils/Pop";
+import { recipeService } from "../services/RecipeService";
 
 export default {
 	setup() {
-		onMounted(() => {});
+		onMounted(() => {
+			getRecipes();
+		});
 		let selecton = ref("home");
+
+		async function getRecipes() {
+			try {
+				await recipeService.getRecipes();
+			} catch (error) {
+				Pop.error(error);
+			}
+		}
 
 		return {
 			selecton,
+			recipes: computed(() => {
+				if (selecton.value == "myRecipes")
+					return AppState.recipes.filter(
+						(recipe) => (recipe.creatorId = AppState.account.id)
+					);
+				else if (selecton.value == "favorite")
+					return AppState.recipes.filter((recipe) => recipe.favorited);
+				else return AppState.recipes;
+			}),
 		};
 	},
 	components: { NavBar, RecipeCard },

@@ -14,7 +14,7 @@ public class FavoriteRepository(IDbConnection db)
         (@accountId, @recipeId);
         
         SELECT
-        recipe.*
+        recipes.*,
         favorites.*
         from recipes
         JOIN favorites ON favorites.recipeId = recipes.id

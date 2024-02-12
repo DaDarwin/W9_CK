@@ -9,6 +9,7 @@
 					>{{ recipe.category }}</span
 				>
 				<i
+					@click="favorite(recipeId, recipe.favoriteId)"
 					class="mdi bg-dark bg-opacity-50 m-2 rounded px-2 py-1 fs-3 text-danger selectable"
 					:class="{
 						'mdi-heart': recipe.favorited,
@@ -28,10 +29,27 @@
 import { AppState } from "../AppState";
 import { computed, ref, onMounted } from "vue";
 import { Recipe } from "../models/Recipe";
+import Pop from "../utils/Pop";
+import { favoriteService } from "../services/FavoriteService.js";
 export default {
 	props: { recipe: { type: Recipe, required: true } },
-	setup() {
-		return {};
+	setup(props) {
+		async function favorite() {
+			try {
+				if (props.recipe.favorited) {
+					await favoriteService.unFavorite(props.recipe.id);
+					Pop.success("Recipe Unfavorited");
+				} else {
+					await favoriteService.FavoriteRecipe(props.recipe.id);
+					Pop.success("Recipe Favorited");
+				}
+			} catch (error) {
+				Pop.error(error);
+			}
+		}
+		return {
+			favorite,
+		};
 	},
 };
 </script>

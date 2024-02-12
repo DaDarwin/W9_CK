@@ -50,13 +50,16 @@ public class AccountsRepository
     string sql = @"
       SELECT
       recipes.*,
-      favorites.id
+      favorites.id,
+      accounts.*
       FROM recipes
       JOIN favorites ON favorites.recipeId = recipes.id
+      JOIN accounts ON accounts.id = recipes.creatorId
       WHERE favorites.accountId = @id;";
-    return _db.Query<FavoriteRecipe, Favorite, FavoriteRecipe>(sql, (recipe, favorite) =>
+    return _db.Query<FavoriteRecipe, Favorite, Account, FavoriteRecipe>(sql, (recipe, favorite, profile) =>
     {
       recipe.FavoriteId = favorite.Id;
+      recipe.Creator = profile;
       return recipe;
     }, new { id }).ToList();
   }
