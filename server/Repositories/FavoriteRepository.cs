@@ -6,7 +6,7 @@ public class FavoriteRepository(IDbConnection db)
 {
     private readonly IDbConnection db = db;
 
-    internal Favorite CreateFavorite(Favorite data)
+    internal FavoriteRecipe CreateFavorite(Favorite data)
     {
         string sql = @"
         INSERT INTO
@@ -16,10 +16,16 @@ public class FavoriteRepository(IDbConnection db)
         (@accountId, @recipeId);
         
         SELECT
+        recipe.*
         favorites.*
-        FROM favorites
+        from recipes
+        JOIN favorites ON favorites.recipeId = recipes.id
         WHERE favorites.id = LAST_INSERT_ID();";
-        return db.Query<Favorite>(sql,
+        return db.Query<FavoriteRecipe, Favorite, FavoriteRecipe>(sql, (recipe, favorite) =>
+        {
+            recipe.FavoriteId = favorite.Id;
+            return recipe;
+        },
         data).FirstOrDefault();
     }
 
