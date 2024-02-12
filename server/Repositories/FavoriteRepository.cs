@@ -1,5 +1,3 @@
-
-
 namespace W9_CK.Repositories;
 
 public class FavoriteRepository(IDbConnection db)
