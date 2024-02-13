@@ -1,4 +1,5 @@
 import { AppState } from "../AppState";
+import { Ingredient } from "../models/Ingredient";
 import { Recipe } from "../models/Recipe";
 import { logger } from "../utils/Logger";
 import { api } from "./AxiosService";
@@ -19,6 +20,15 @@ class RecipeService {
 			);
 			AppState.recipes[index] = favoriteRecipes[i];
 		}
+	}
+
+	async selectRecipe(recipe) {
+		AppState.activeRecipe = recipe;
+		const res = api.get(`api/recipes/${recipe.id}/ingredients`);
+		AppState.activeRecipeIngredients = (await res).data.map(
+			(pojo) => new Ingredient(pojo)
+		);
+		console.log(AppState.activeRecipeIngredients);
 	}
 
 	// async getProfileRecipes(id) {

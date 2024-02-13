@@ -9,6 +9,7 @@
 					>{{ recipe.category }}</span
 				>
 				<i
+					v-if="account.id"
 					@click="favorite(recipeId, recipe.favoriteId)"
 					class="mdi bg-dark bg-opacity-50 m-2 rounded px-2 py-1 fs-3 text-danger selectable"
 					:class="{
@@ -17,7 +18,11 @@
 					}"></i>
 			</div>
 
-			<div class="bg-dark bg-opacity-50 text-light m-2 rounded p-1 selectable">
+			<div
+				@click="selectRecipe()"
+				data-bs-toggle="modal"
+				data-bs-target="#recipeModal"
+				class="bg-dark bg-opacity-50 text-light m-2 rounded p-1 selectable">
 				<div class="fs-4">{{ recipe.title }}</div>
 				<div>{{ recipe.subtitle }}</div>
 			</div>
@@ -27,17 +32,19 @@
 
 <script>
 import { AppState } from "../AppState";
-import { computed, ref, onMounted } from "vue";
+import { computed, ref, onMounted, popScopeId } from "vue";
 import { Recipe } from "../models/Recipe";
 import Pop from "../utils/Pop";
 import { favoriteService } from "../services/FavoriteService.js";
+import { recipeService } from "../services/RecipeService";
 export default {
 	props: { recipe: { type: Recipe, required: true } },
 	setup(props) {
 		async function favorite() {
 			try {
 				if (props.recipe.favorited) {
-					await favoriteService.unFavorite(props.recipe.id);
+					await favoriteService.unFavorite(props.recipe.favoriteId);
+					props.recipe.favorited = false;
 					Pop.success("Recipe Unfavorited");
 				} else {
 					await favoriteService.FavoriteRecipe(props.recipe.id);
@@ -47,8 +54,18 @@ export default {
 				Pop.error(error);
 			}
 		}
+
+		async function selectRecipe() {
+			try {
+				await recipeService.selectRecipe(props.recipe);
+			} catch (error) {
+				popScopeId.error(error);
+			}
+		}
 		return {
 			favorite,
+			selectRecipe,
+			account: computed(() => AppState.account),
 		};
 	},
 };

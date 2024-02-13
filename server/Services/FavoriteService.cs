@@ -12,7 +12,8 @@ public class FavoriteService(FavoriteRepository repo)
 
     internal Favorite GetFavorite(int id)
     {
-        return repo.GetFavorite(id) ?? throw new Exception($"No Favorite With Id: {id}");
+        Favorite favorite = repo.GetFavorite(id);
+        return favorite ?? throw new Exception($"No Favorite With Id: {id}");
     }
 
     internal string DeleteFavorite(int id, string userId)

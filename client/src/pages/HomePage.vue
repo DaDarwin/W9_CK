@@ -13,15 +13,17 @@
 				class="position-absolute top-100 start-50 translate-middle w-fit bg-primary box-shadow rounded">
 				<button
 					@click="selecton = 'home'"
-					class="btn selectable rounded-end-0 fs-4"
+					class="btn selectable fs-4"
 					:class="{
 						'bg-info': selecton == 'home',
 						'text-primary': selecton == 'home',
 						'text-info': selecton != 'home',
+						'rounded-end-0': account.id,
 					}">
 					Home
 				</button>
 				<button
+					v-if="account.id"
 					@click="selecton = 'myRecipes'"
 					class="btn selectable rounded-0 fs-4"
 					:class="{
@@ -32,6 +34,7 @@
 					My Recipes
 				</button>
 				<button
+					v-if="account.id"
 					@click="selecton = 'favorite'"
 					class="btn selectable rounded-start-0 fs-4"
 					:class="{
@@ -58,6 +61,7 @@
 					class="col-12 col-md-4" />
 			</div>
 		</div>
+		<RecipeModal />
 	</section>
 </template>
 
@@ -68,6 +72,7 @@ import RecipeCard from "../components/RecipeCard.vue";
 import { AppState } from "../AppState";
 import Pop from "../utils/Pop";
 import { recipeService } from "../services/RecipeService";
+import RecipeModal from "../components/RecipeModal.vue";
 
 export default {
 	setup() {
@@ -95,9 +100,10 @@ export default {
 					return AppState.recipes.filter((recipe) => recipe.favorited);
 				else return AppState.recipes;
 			}),
+			account: computed(() => AppState.account),
 		};
 	},
-	components: { NavBar, RecipeCard },
+	components: { NavBar, RecipeCard, RecipeModal },
 };
 </script>
 

@@ -14,6 +14,9 @@ class FavoriteService {
 
 	async unFavorite(id) {
 		await api.delete(`api/favorites/${id}`);
+		const index = AppState.recipes.findIndex((recipe) => recipe.id == id);
+		AppState.recipes[index].favorited = false;
+		AppState.recipes[index].favoriteId = null;
 	}
 }
 
