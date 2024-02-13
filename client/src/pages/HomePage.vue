@@ -50,9 +50,9 @@
 				class="rounded"
 				src="https://media.istockphoto.com/id/1218254547/photo/varied-food-carbohydrates-protein-vegetables-fruits-dairy-legumes-on-wood.webp?b=1&s=170667a&w=0&k=20&c=uGHRWrmqv4Nxdj7iUO4iYavWLjqFB3uwH1K3RQ9NID0=" />
 		</div>
-		<div class="mt-5">
+		<div class="mt-5 w-100">
 			<div
-				class="row justify-content-evenly"
+				class="row justify-content-evenly w-100"
 				v-if="recipes.length">
 				<RecipeCard
 					v-for="recipe in recipes"

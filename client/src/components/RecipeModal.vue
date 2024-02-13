@@ -35,8 +35,8 @@
 							<div class="fs-5">Ingredients</div>
 							<i v-for="ingredient in ingredients">
 								<i class="mdi mdi-circle-medium"></i>
-								{{ ingredient.name }}
 								{{ ingredient.quantity }}
+								{{ ingredient.name }}
 							</i>
 						</div>
 					</div>
