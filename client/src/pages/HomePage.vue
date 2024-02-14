@@ -10,7 +10,7 @@
 			</div>
 
 			<span
-				class="position-absolute top-100 start-50 translate-middle w-fit bg-primary box-shadow rounded">
+				class="position-absolute top-100 start-50 translate-middle w-fit bg-primary box-shadow rounded d-flex">
 				<button
 					@click="selecton = 'home'"
 					class="btn selectable fs-4"
@@ -25,7 +25,7 @@
 				<button
 					v-if="account.id"
 					@click="selecton = 'myRecipes'"
-					class="btn selectable rounded-0 fs-4"
+					class="btn selectable rounded-0 fs-4 w-fit"
 					:class="{
 						'bg-info': selecton == 'myRecipes',
 						'text-primary': selecton == 'myRecipes',
@@ -51,6 +51,7 @@
 				src="https://media.istockphoto.com/id/1218254547/photo/varied-food-carbohydrates-protein-vegetables-fruits-dairy-legumes-on-wood.webp?b=1&s=170667a&w=0&k=20&c=uGHRWrmqv4Nxdj7iUO4iYavWLjqFB3uwH1K3RQ9NID0=" />
 		</div>
 		<div class="mt-5 w-100">
+			<RecipeForm />
 			<div
 				class="row justify-content-evenly w-100"
 				v-if="recipes.length">
@@ -67,12 +68,13 @@
 
 <script>
 import { onMounted, ref, computed } from "vue";
+import Pop from "../utils/Pop";
 import NavBar from "../components/Navbar.vue";
 import RecipeCard from "../components/RecipeCard.vue";
-import { AppState } from "../AppState";
-import Pop from "../utils/Pop";
-import { recipeService } from "../services/RecipeService";
 import RecipeModal from "../components/RecipeModal.vue";
+import RecipeForm from "../components/RecipeForm.vue";
+import { AppState } from "../AppState";
+import { recipeService } from "../services/RecipeService";
 
 export default {
 	setup() {
@@ -103,7 +105,7 @@ export default {
 			account: computed(() => AppState.account),
 		};
 	},
-	components: { NavBar, RecipeCard, RecipeModal },
+	components: { NavBar, RecipeCard, RecipeModal, RecipeForm },
 };
 </script>
 

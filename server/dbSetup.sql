@@ -5,7 +5,11 @@ CREATE TABLE IF NOT EXISTS accounts (
     updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Last Update',
     name varchar(255) COMMENT 'User Name',
     email varchar(255) COMMENT 'User Email',
-    picture varchar(255) COMMENT 'User Picture'
+    picture varchar(1000) COMMENT 'User Picture',
+    Bio VARCHAR(2000) COMMENT 'User Bio',
+    CoverImg varchar(1000) COMMENT 'User CoverImg',
+    GitHub VARCHAR(255) COMMENT 'User GitHub',
+    LinkedIn VARCHAR(255) COMMENT 'User LinkedIn'
 ) default charset utf8 COMMENT '';
 
 CREATE TABLE recipes (

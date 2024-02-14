@@ -21,6 +21,22 @@ public class AccountController(AccountService accountService, Auth0Provider auth
       return BadRequest(e.Message);
     }
   }
+  [HttpPut]
+  [Authorize]
+  public async Task<ActionResult<Account>> UpdateAccount([FromBody] Account data)
+  {
+    try
+    {
+      Account user = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
+      return Ok(_accountService.Edit(data, user.Email));
+    }
+    catch (Exception error)
+    {
+      return BadRequest(error.Message);
+    }
+  }
+
+
   [HttpGet("favorites")]
   [Authorize]
   public async Task<ActionResult<List<FavoriteRecipe>>> GetAccountFavorites()
